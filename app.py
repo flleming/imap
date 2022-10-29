@@ -20,8 +20,8 @@ app.add_middleware(
 async def event_startup():
     logging.info("sql connection....")
     databaseInt()
-    schedule = asyncio.create_task(rocketry_app.serve())
-    schedule
+    # schedule = asyncio.create_task(rocketry_app.serve())
+    # schedule
 
 
 @app.on_event("shutdown")

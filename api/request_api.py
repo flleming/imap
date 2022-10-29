@@ -30,3 +30,11 @@ async def get_token_api(startDate: str = None, endDate: str = None, requestServi
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Bad request!",
                 )
+
+@router.get('/request')
+async def createRequest(requestService: RequestService =Depends(RequestService), _: bool = Depends(auth)):
+    try:
+        requestService.tools
+        return "created request!"
+    finally:
+        ...    
