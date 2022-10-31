@@ -21,11 +21,11 @@ class RequestService:
             message = next(mails)
             message_content = message.text.split('\n')
             message_date = message.date
-            location, subject = self.getSubject(message_content[12])
-            content_list = self.getContentList(message_content[13:len(message_content) - 19], subject, location, message_date)
+            location, subject = self.getSubject(message_content[1])
+            content_list = self.getContentList(message_content[6:len(message_content) - 12], subject, location, message_date)
             self.imap.delete(message.uid)
             return content_list, message.uid
-        except Exception:
+        except Exception as e:
             ...
 
     def getContentList(self, content: list, subject: str, location: str, request_date: datetime) -> list:
@@ -54,12 +54,14 @@ class RequestService:
     @staticmethod
     def getSubject(subject: list) -> tuple:
         subject_list = subject.split(" ")
+        print(subject_list)
         index_employment = subject_list.index(EMPLOYMENT)
         try:
             index_lodash = subject_list.index("-")
+            print("index", index_lodash, " ".join(subject_list[index_lodash + 1:len(subject_list)]))
             return " ".join(subject_list[index_lodash + 1:len(subject_list)]), " ".join(
                 subject_list[index_employment + 1: index_lodash])
-        finally:
+        except Exception as e:
             return " ", " ".join(subject_list[index_employment + 1:len(subject_list)])
 
     def createRequest(self, **args: Request):

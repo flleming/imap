@@ -33,16 +33,15 @@ async def get_request(startDate: str = None, endDate: str = None, requestService
 
 @router.get('/request')
 async def create_request(requestService: RequestService =Depends(RequestService),token:str=None):
-    try:
         if token is None or token!=TOKEN:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="token invalid",
                 )
-        requestService.tools
-        return "created request!"
-    except Exception as e:
-        raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="something went wrong!",
-                )    
+        response=requestService.tools
+        if response is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="BAD REQUEST",
+                ) 
+        return "request created!"
