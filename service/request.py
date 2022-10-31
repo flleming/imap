@@ -23,7 +23,7 @@ class RequestService:
             message_date = message.date
             location, subject = self.getSubject(message_content[12])
             content_list = self.getContentList(message_content[13:len(message_content) - 19], subject, location, message_date)
-            #self.imap.delete(message.uid)
+            self.imap.delete(message.uid)
             return content_list, message.uid
         except Exception:
             ...
