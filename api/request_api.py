@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.get('/', response_model=list[RequestSchema])
-async def get_token_api(requestService: RequestService = Depends(RequestService), _: bool = Depends(auth)):
+async def get_yesterday_request(requestService: RequestService = Depends(RequestService), _: bool = Depends(auth)):
     try:
         requests = await requestService.get_yesterday_request()
         print(requests)
@@ -18,7 +18,7 @@ async def get_token_api(requestService: RequestService = Depends(RequestService)
 
 
 @router.get('/{startDate}/{endDate}', response_model=list[RequestSchema])
-async def get_token_api(startDate: str = None, endDate: str = None, requestService: RequestService =Depends(RequestService), _: bool = Depends(auth)):
+async def get_request(startDate: str = None, endDate: str = None, requestService: RequestService =Depends(RequestService), _: bool = Depends(auth)):
         try:
             start = dt.datetime.strptime(startDate, '%Y-%m-%d')
             end = dt.datetime.strptime(endDate, '%Y-%m-%d')
@@ -32,7 +32,7 @@ async def get_token_api(startDate: str = None, endDate: str = None, requestServi
                 )
 
 @router.get('/request')
-async def createRequest(requestService: RequestService =Depends(RequestService), _: bool = Depends(auth)):
+async def create_request(requestService: RequestService =Depends(RequestService), _: bool = Depends(auth)):
     try:
         requestService.tools
         return "created request!"
